@@ -3,9 +3,11 @@ import Taro, { Config } from '@tarojs/taro'
 import { View, Text, Button, RichText } from '@tarojs/components'
 import './form.less'
 
+const db = Taro.cloud.database()
+const educationCollection = db.collection('education')
+
 const FormBox = function (props) {
   const {
-    educationCollection,
     curDataSource
   } = props
   const handleOpen = useCallback(
