@@ -32,16 +32,19 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
+    "@rematch/core": "^2.2.0",
     "@taroify/core": "^0.0.27-alpha.0",
     "@tarojs/cli": "3.3.10",
     "@tarojs/components": "3.3.10",
     "@tarojs/react": "3.3.10",
     "@tarojs/runtime": "3.3.10",
-    "@tarojs/taro": "3.3.10",
+    "@tarojs/taro": "^3.3.10",
     "lodash": "4.17.15",
     "miniprogram-table-component": "^1.1.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
     "taro3-table": "^1.0.31"
   },
   "devDependencies": {
@@ -52,6 +55,7 @@
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^2.x",
     "@typescript-eslint/parser": "^2.x",
+    "babel-plugin-import": "^1.13.3",
     "babel-preset-taro": "3.3.10",
     "eslint": "^6.8.0",
     "eslint-config-taro": "3.3.10",

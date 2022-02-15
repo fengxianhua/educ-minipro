@@ -1,33 +1,20 @@
 import React,{ useState, useEffect, useMemo } from 'react'
-import Taro, { Config } from '@tarojs/taro'
-import { View, Text, Image, RichText } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { View, Text, Image } from '@tarojs/components'
 import './index.less'
 import FormBox from '../../components/form'
 import TableBox from '../../components/table'
 import BorderTitle from '../../components/borderTitle'
 
-const db = Taro.cloud.database()
-const educationCollection = db.collection('education')
-
 const Index = () => {
-  const [curDataSource, setCurDataSource] = useState([])
-  const [curUserInfo, setCurUserInfo] = useState(null)
-  const [countInfo, setCountInfo] = useState({
-    total: 0,
-    newTotal: 0,
-  })
+  const dispatch: { education: any } = useDispatch()
+  const state = useSelector((state: { education: any }) => state.education)
+  const { originDataSource, totalCount, newTotalCount } = state
 
   useEffect(() => {
-    educationCollection.get().then(({data}) => {
-      if (data?.length) {
-        const total = data.length
-        const newTotal = data.filter(item => item.isNew)?.length
-        setCountInfo({
-          total,
-          newTotal,
-        })
-      }
-    })
+    dispatch.education.getAllDataSource()
   }, [])
 
   return (
@@ -35,13 +22,13 @@ const Index = () => {
       {/* 报名人数情况 */}
       <Text style="margin: 10px 0;display:block">
         <Text style="color: red;margin-right: 20px">当前报名人数：
-          <Text style="color: blue;">{countInfo?.total}</Text>
+          <Text style="color: blue;">{totalCount}</Text>
         </Text>
         <Text style="color: red;margin-right: 20px">老生：
-          <Text style="color: blue;">{countInfo?.total - countInfo?.newTotal}</Text>
+          <Text style="color: blue;">{totalCount - newTotalCount}</Text>
         </Text>
         <Text style="color: red;">新生：
-          <Text style="color: blue;">{countInfo?.newTotal}</Text>
+          <Text style="color: blue;">{newTotalCount}</Text>
         </Text>
       </Text>
       {/* pic1 */}
@@ -111,11 +98,11 @@ const Index = () => {
       />
       <View style="width: 100%; background:blue; height: 1px; margin: 20px 0"></View>
       {/* 开团按钮 */}
-      <FormBox curDataSource={curDataSource} setCurUserInfo={setCurUserInfo} />
+      <FormBox />
       {/* 报名展示 */}
       <BorderTitle value="报名展示" />
       {/* 报名表格 */}
-      <TableBox setCurDataSource={setCurDataSource} curUserInfo={curUserInfo} />
+      <TableBox />
         {/* 备注、校区及联系方式 */}
       <Image
         style="width: 100%; height: 360px"

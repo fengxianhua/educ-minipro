@@ -1,4 +1,5 @@
-import React,{ useState, useEffect,useCallback }  from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Taro from '@tarojs/taro'
 import { View, Text, Input } from '@tarojs/components'
 import './table.less'
@@ -12,28 +13,42 @@ const educationCollection = db.collection('education')
 const _ = db.command
 
 const TableBox = function (props) {
+  const dispatch: { education: any } = useDispatch()
+  const state = useSelector((state: { education: any }) => state.education)
+
+  const {
+    originDataSource,
+    totalCount,
+  } = state
+
   const [searchValue, setSearchValue] = useState('')
-  const [dataSourceList, setDataSource] = useState([])
+  const [curDataSourceList, setCurDataSource]:any = useState([])
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    if (searchValue) {
-      educationCollection.where({
-        userName: _.eq(searchValue)
-        }).skip((currentPage - 1) * 10).limit(10).get().then(({data}) => {
-          if (data?.length) {
-            setDataSource(data)
-          }
-        })
-    }
-    educationCollection.skip((currentPage - 1) * 10).limit(10).get().then(({data}) => {
-      if (data?.length) {
-        setDataSource(data)
-      }
-    })
-  }, [currentPage, searchValue])
+    if (!originDataSource?.length) return
+    const newList = []
+    const copyList = [...originDataSource]
 
-  
+    if (searchValue) {
+      setCurrentPage(1)
+      originDataSource?.map(item => {
+        if (item.userName.includes(searchValue)) {
+          newList.push(item)
+        }
+      })
+      setCurDataSource(newList.splice(0, 10))
+    } else {
+      setCurDataSource(copyList.splice(0, 10))
+    }
+  }, [searchValue])
+
+  useEffect(() => {
+    if (!originDataSource?.length) return
+    const copyList = [...originDataSource]
+    setCurDataSource(copyList.splice((currentPage -1) * 10, currentPage * 10))
+  }, [currentPage, originDataSource])
+
   const columns = [
     {
       title: '编号',
@@ -61,13 +76,26 @@ const TableBox = function (props) {
       title: '报名人数',
       dataIndex: 'count',
       width: "20%",
+      render: text => text || 1
     },
     {
       title: '参团',
       dataIndex: 'inGroup',
       width: '20%',
-      render: (text, record) => {
-        return (<Text style="color: red;cursor: pointer;" onClick={() => {
+      render: () => {
+        return (<Text
+          style="
+            cursor: pointer;
+            color: white;
+            font-size: 12px;
+            min-width: 40px;
+            margin-left: 10px;
+            background: rgb(0, 178,35);
+            border-radius: 2px;
+            display: block;
+
+          "
+          onClick={() => {
           if (!props.curUserInfo) {
             Dialog.alert("请先点击《我要参团》填写报名所需信息！")
           }
@@ -102,6 +130,7 @@ const TableBox = function (props) {
     },
     [currentPage],
   )
+ 
   return (
     <View className='table-search-box'>
       <Dialog id="dialog" />
@@ -117,11 +146,11 @@ const TableBox = function (props) {
       <Table
         className='table-box'
         columns={columns}
-        dataSource={dataSourceList}
+        dataSource={curDataSourceList}
       />
       {
-        dataSourceList?.length
-          ? <Pagination siblingCount={0} current={currentPage} count={dataSourceList?.length} onChange={handlePageChange} />
+        originDataSource?.length
+          ? <Pagination siblingCount={0} current={currentPage} count={Math.ceil(totalCount / 10)} onChange={handlePageChange} />
           : null
       }
     </View>
