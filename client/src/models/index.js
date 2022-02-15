@@ -1,9 +1,9 @@
 import Taro from '@tarojs/taro'
-import _ from 'lodash';
 
 Taro.cloud.init()
 const db = Taro.cloud.database()
 const educationCollection = db.collection('education')
+const _ = db.command
 
 export const education = {
   state: {

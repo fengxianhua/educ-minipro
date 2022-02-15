@@ -5,12 +5,6 @@ import { View, Text, Input } from '@tarojs/components'
 import './table.less'
 import Table from 'taro3-table';
 import { Pagination, Dialog } from "@taroify/core"
-import "@taroify/core/pagination/style"
-import "@taroify/core/dialog/style"
-
-const db = Taro.cloud.database()
-const educationCollection = db.collection('education')
-const _ = db.command
 
 const TableBox = function (props) {
   const dispatch: { education: any } = useDispatch()
@@ -25,23 +19,23 @@ const TableBox = function (props) {
   const [curDataSourceList, setCurDataSource]:any = useState([])
   const [currentPage, setCurrentPage] = useState(1)
 
-  useEffect(() => {
-    if (!originDataSource?.length) return
-    const newList = []
-    const copyList = [...originDataSource]
+  // useEffect(() => {
+  //   if (!originDataSource?.length) return
+  //   const newList = []
+  //   const copyList = [...originDataSource]
 
-    if (searchValue) {
-      setCurrentPage(1)
-      originDataSource?.map(item => {
-        if (item.userName.includes(searchValue)) {
-          newList.push(item)
-        }
-      })
-      setCurDataSource(newList.splice(0, 10))
-    } else {
-      setCurDataSource(copyList.splice(0, 10))
-    }
-  }, [searchValue])
+  //   if (searchValue) {
+  //     setCurrentPage(1)
+  //     originDataSource?.map(item => {
+  //       if (item.userName.includes(searchValue)) {
+  //         newList.push(item)
+  //       }
+  //     })
+  //     setCurDataSource(newList.splice(0, 10))
+  //   } else {
+  //     setCurDataSource(copyList.splice(0, 10))
+  //   }
+  // }, [searchValue])
 
   useEffect(() => {
     if (!originDataSource?.length) return
@@ -105,28 +99,27 @@ const TableBox = function (props) {
 ]
   const handleSearch = useCallback(
     () => {
-      if (searchValue !== '') {
-        educationCollection.where({
-          userName: _.eq(searchValue)
-        }).get().then(({data}) => {
-          if (data?.length) {
-            setDataSource(data)
+      if (!originDataSource?.length) return
+      const newList = []
+      const copyList = [...originDataSource]
+
+      if (searchValue) {
+        setCurrentPage(1)
+        originDataSource?.map(item => {
+          if (item.userName.includes(searchValue)) {
+            newList.push(item)
           }
         })
+        setCurDataSource(newList.splice(0, 10))
       } else {
-        educationCollection.get().then(({data}) => {
-          if (data?.length) {
-            setDataSource(data)
-          }
-        })
+        setCurDataSource(copyList.splice(0, 10))
       }
     },
     [searchValue],
   )
   const handlePageChange = useCallback(
     (page) => {
-      if (page === currentPage) return
-      setCurrentPage(page)
+      page !== currentPage && setCurrentPage(page)
     },
     [currentPage],
   )

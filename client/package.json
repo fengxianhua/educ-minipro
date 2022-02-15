@@ -38,7 +38,7 @@
     "@tarojs/components": "3.3.10",
     "@tarojs/react": "3.3.10",
     "@tarojs/runtime": "3.3.10",
-    "@tarojs/taro": "^3.3.10",
+    "@tarojs/taro": "3.3.10",
     "lodash": "4.17.15",
     "miniprogram-table-component": "^1.1.0",
     "react": "^17.0.0",

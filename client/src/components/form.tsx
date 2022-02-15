@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback, useRef, useMemo} from 'react'
+import React, { useState, useCallback, useRef, useMemo} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Taro, { Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import { View } from '@tarojs/components'
 import { Toast, Form, Input, Cell, Divider, Radio, Button, Picker, Popup } from "@taroify/core"
 import './form.less'
 
@@ -14,12 +14,6 @@ const FormBox = function () {
   const [selectOpen, setSelectOpen] = useState(false)
   const handleOpenGroup = useCallback(
     () => {
-      // state.curDataSource?.map(item => {
-      //   if (item.userName?.includes('大姐姐')) {
-      //     Dialog.alert('该学员已报名！')
-      //   }
-      // })
-      
       setIsOpenGroup(true)
       setFormShow(true)
     },
