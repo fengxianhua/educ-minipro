@@ -156,7 +156,7 @@ const FormBox = function () {
               </Cell.Group>
               <View style={{ margin: "16px" }}>
                 <Button className="form-btn" shape="round" block color="primary" formType="submit">
-                  开团信息确认
+                  {isOpenGroup ? '开团' : '参团' }信息确认
                 </Button>
                 <Button className="form-btn" shape="round" block color="primary" formType="reset">
                   放弃
