@@ -1,6 +1,11 @@
 import React,{ useState, useEffect, useMemo } from 'react'
 import Taro from '@tarojs/taro'
 import { useDispatch, useSelector } from 'react-redux'
+import p1 from '../../assets/p1.jpg'
+import pic9 from '../../assets/pic9.jpg'
+import pic10 from '../../assets/pic10.jpg'
+import pic11 from '../../assets/pic11.jpg'
+import pic13 from '../../assets/pic13.jpg'
 
 import { View, Text, Image } from '@tarojs/components'
 import './index.less'
@@ -34,8 +39,7 @@ const Index = () => {
       {/* pic1 */}
       <Image
         style="width: 100%;"
-        src="/assets/p1.jpg"
-        // src={pic1}
+        src={p1}
       />
       {/* pic2 */}
       <Image
@@ -69,17 +73,17 @@ const Index = () => {
       {/* pic9 */}
       <Image
         style="width: 100%; height: 500px"
-        src="/assets/pic9.jpg"
+        src={pic9}
       />
       {/* pic10 */}
       <Image
         style="width: 100%; height: 500px"
-        src="/assets/pic10.jpg"
+        src={pic10}
       />
       {/* pic11 */}
       <Image
         style="width: 100%; height: 500px"
-        src="/assets/pic11.jpg"
+        src={pic11}
       />
       {/* 活动介绍 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
@@ -116,7 +120,7 @@ const Index = () => {
         {/* 备注、校区及联系方式 */}
       <Image
         style="width: 100%; height: 420px"
-        src="/assets/pic13.jpg"
+        src={pic13}
       />
     </View>
   )
