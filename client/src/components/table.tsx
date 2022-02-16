@@ -140,7 +140,7 @@ const TableBox = function (props) {
       />
       {
         originDataSource?.length
-          ? <Pagination siblingCount={0} current={currentPage} count={Math.ceil(totalCount / 10)} onChange={handlePageChange} />
+          ? <Pagination siblingCount={0} current={currentPage} count={Math.ceil((originDataSource?.length || 10) / 10)} onChange={handlePageChange} />
           : null
       }
     </View>
