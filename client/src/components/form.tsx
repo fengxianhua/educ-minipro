@@ -73,9 +73,11 @@ const FormBox = function () {
     if (groupFull) {
       return Toast.open('该团人数已满，请重新选择参团团长！')
     }
-
+    if (!value.grouperUserName) {
+      value.grouperUserName = [state.pickedGrouper]
+    }
     dispatch.education.openGroup({...value, isOpenGroup})
-  }, [state.originDataSource, isOpenGroup])
+  }, [state.originDataSource, state.pickedGrouper, isOpenGroup])
 
   const onReset = useCallback(() => {
     dispatch.education.setBaseState({
@@ -149,7 +151,7 @@ const FormBox = function () {
                         name="grouperUserName"
                         rules={[{ required: true, message: "请选择参团团长" }]}
                         clickable
-                        defaultValue={state.pickedGrouper}
+                        defaultValue={[state.pickedGrouper]}
                       >
                         <Form.Label>请参团团长</Form.Label>
                         <Form.Control>
