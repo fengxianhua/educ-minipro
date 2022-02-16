@@ -45,6 +45,7 @@ export const education = {
     totalCount: 0,
     newTotalCount: 0, // 新生
     addStatus: null, //新增状态
+    pickedGrouper: null, //默认选择团长
   },
   reducers: {
     setBaseState (state, res) {

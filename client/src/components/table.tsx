@@ -29,7 +29,7 @@ const TableBox = function (props) {
     {
       title: '编号',
       dataIndex: 'index',
-      width: '25%',
+      width: '20%',
       render: (text, record, index) => {
         return (index + 1) + 10 * (currentPage - 1)
       }
@@ -37,12 +37,12 @@ const TableBox = function (props) {
     {
       title: '团长姓名',
       dataIndex: 'userName',
-      width: '25%',
+      width: '20%',
     },
     {
       title: '手机尾号',
       dataIndex: 'phone',
-      width: '25%',
+      width: '20%',
       render: (text) => {
         const isPhoneNo = text && (/^[1][3,4,5,7,8][0-9]{9}$/.test(text))
         return isPhoneNo ? (text + '').substring(7) : '号码有误'
@@ -51,33 +51,38 @@ const TableBox = function (props) {
     {
       title: '报名人数',
       dataIndex: 'count',
-      width: "25%",
+      width: "20%",
       render: text => text || 1
     },
-    // {
-    //   title: '参团',
-    //   dataIndex: 'inGroup',
-    //   width: '20%',
-    //   render: () => {
-    //     return (<Text
-    //       style="
-    //         cursor: pointer;
-    //         color: white;
-    //         font-size: 12px;
-    //         min-width: 40px;
-    //         margin-left: 10px;
-    //         background: rgb(0, 178,35);
-    //         border-radius: 2px;
-    //         display: block;
-
-    //       "
-    //       onClick={() => {
-    //       if (!props.curUserInfo) {
-    //         Dialog.alert("请先点击《我要参团》填写报名所需信息！")
-    //       }
-    //     }}>参团</Text>)
-    //   }
-    // },
+    {
+      title: '参团',
+      dataIndex: 'inGroup',
+      width: '20%',
+      render: (text, record) => {
+        return (<Text
+          style="
+            cursor: pointer;
+            color: white;
+            font-size: 12px;
+            min-width: 50px;
+            height: 20px;
+            line-height: 20px;
+            margin-left: 10px;
+            background: rgb(0, 178,35);
+            border-radius: 2px;
+            display: block;
+          "
+          onClick={() => {
+            Taro.pageScrollTo({
+              selector: "#openGroupPos",
+              duration: 100,
+            })
+            dispatch.education.setBaseState({
+              pickedGrouper: `${record.userName}-${`${record.phone}`.substring(7)}`
+            })
+        }}>参团</Text>)
+      }
+    },
 ]
   const handleSearch = useCallback(
     () => {

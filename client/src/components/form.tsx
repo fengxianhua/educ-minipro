@@ -28,9 +28,17 @@ const FormBox = function () {
   )
 
   useEffect(() => {
+    if (state.pickedGrouper) {
+      setFormShow(true)
+      setIsOpenGroup(false)
+    }
+  }, [state.pickedGrouper])
+
+  useEffect(() => {
     if (state.addStatus) {
       dispatch.education.setBaseState({
         addStatus: null,
+        pickedGrouper: null,
       })
       setFormShow(false)
       Toast.success(`${isOpenGroup ? '开团' : '参团'}成功！`)
@@ -40,9 +48,15 @@ const FormBox = function () {
   const onSubmit = useCallback(({detail: {value}}) => {
     if (!value) return 
     let isInGroup = false
+    let groupFull = false
+
     state.originDataSource?.map(item => {
       if (item.userName === value.userName) {
         isInGroup  = true
+      }
+      if (item.userName === value.grouperUserName[0].split('-')[0]
+        && (item.members?.length > 8 || item.count > 8)) {
+        groupFull = true
       }
       item?.members.map((member) => {
         if (member.userName === value.userName) {
@@ -53,10 +67,17 @@ const FormBox = function () {
     if (isInGroup) {
       return Toast.open('该会员已存在！')
     }
+    if (groupFull) {
+      return Toast.open('该团人数已满，请重新选择参团团长！')
+    }
+
     dispatch.education.openGroup({...value, isOpenGroup})
   }, [state.originDataSource, isOpenGroup])
 
   const onReset = useCallback(() => {
+    dispatch.education.setBaseState({
+      pickedGrouper: null,
+    })
     setFormShow(false)
   }, [])
 
@@ -69,7 +90,7 @@ const FormBox = function () {
   }, [state.originDataSource])
 
   return (
-    <View className='form-box'>
+    <View className='form-box' id="openGroupPos">
       <Toast id="toast" />
       {
         formShow 
@@ -125,6 +146,7 @@ const FormBox = function () {
                         name="grouperUserName"
                         rules={[{ required: true, message: "请选择参团团长" }]}
                         clickable
+                        defaultValue={state.pickedGrouper}
                       >
                         <Form.Label>请参团团长</Form.Label>
                         <Form.Control>
