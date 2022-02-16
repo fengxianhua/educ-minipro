@@ -2,12 +2,14 @@ import React, { useState, useCallback, useRef, useMemo, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { Toast, Form, Input, Cell, Divider, Radio, Button, Picker, Popup } from "@taroify/core"
+import { Toast, Form, Input, Cell, Divider, Radio, Button, Picker, Popup, Dialog } from "@taroify/core"
 import './form.less'
 
 const FormBox = function () {
   const [formShow, setFormShow] = useState(false)
   const [isOpenGroup, setIsOpenGroup] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [groupLeaderInfo, setGroupLeaderInfo] = useState('')
   const dispatch: { education: any } = useDispatch()
   const state = useSelector((state: { education: any }) => state.education)
   const selectRef = useRef(null)
@@ -21,14 +23,16 @@ const FormBox = function () {
   )
   const handleJoinGroup = useCallback(
     () => {
+      if (!state.originDataSource?.length) return Toast.open("当前还未有成团，请先开团！")
       setIsOpenGroup(false)
       setFormShow(true)
     },
-    [],
+    [state.originDataSource],
   )
 
   useEffect(() => {
     if (state.pickedGrouper) {
+      setGroupLeaderInfo(state.pickedGrouper)
       setFormShow(true)
       setIsOpenGroup(false)
     }
@@ -41,7 +45,7 @@ const FormBox = function () {
         pickedGrouper: null,
       })
       setFormShow(false)
-      Toast.success(`${isOpenGroup ? '开团' : '参团'}成功！`)
+      setDialogOpen(true)
     }
   }, [state.addStatus])
 
@@ -50,14 +54,23 @@ const FormBox = function () {
     let isInGroup = false
     let groupFull = false
 
+    if (!value.grouperUserName && state.pickedGrouper) {
+      value.grouperUserName = [state.pickedGrouper]
+    }
+
+    if (isOpenGroup) {
+      setGroupLeaderInfo(`${value.userName}-${(value.phone + '').substring(7)}`)
+    }
+
     state.originDataSource?.map(item => {
       if (item.userName === value.userName) {
         isInGroup  = true
       }
       if (
-        item.isGroupLeader
-        && value.userName === item.userName
-        && (item.members?.length > 8 || item.count > 8)
+        !isOpenGroup
+        // && item.isGroupLeader
+        && value.grouperUserName[0].split('-')[0] === item.userName
+        && (item.members?.length > 8 || item.count > 9)
         ) {
         groupFull = true
       }
@@ -72,9 +85,6 @@ const FormBox = function () {
     }
     if (groupFull) {
       return Toast.open('该团人数已满，请重新选择参团团长！')
-    }
-    if (!value.grouperUserName) {
-      value.grouperUserName = [state.pickedGrouper]
     }
     dispatch.education.openGroup({...value, isOpenGroup})
   }, [state.originDataSource, state.pickedGrouper, isOpenGroup])
@@ -97,6 +107,20 @@ const FormBox = function () {
   return (
     <View className='form-box' id="openGroupPos">
       <Toast id="toast" />
+      <Dialog id="dialog" />
+      <Dialog open={dialogOpen} onClose={setDialogOpen}>
+        <Dialog.Header>祝贺{isOpenGroup ? '开团' : '参团' }成功！！！</Dialog.Header>
+        <Dialog.Content>
+          {
+            isOpenGroup
+            ? `您是团长，手机尾号${groupLeaderInfo?.split('-')[1]}`
+            : `您的团长是${groupLeaderInfo?.split('-')[0]}, 手机尾号${groupLeaderInfo?.split('-')[1]}`
+          }
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onClick={() => setDialogOpen(false)}>确认</Button>
+        </Dialog.Actions>
+      </Dialog>
       {
         formShow
           ?
@@ -143,7 +167,7 @@ const FormBox = function () {
                   </Form.Control>
                 </Form.Item>
                 {
-                  !isOpenGroup
+                  !isOpenGroup && state.originDataSource?.length
                     ?
                     <View>
                       <Form.Item
@@ -162,6 +186,7 @@ const FormBox = function () {
                           <Picker
                             onCancel={() => setSelectOpen(false)}
                             onConfirm={(newValue) => {
+                              setGroupLeaderInfo(newValue[0])
                               selectRef?.current?.setValue(newValue)
                               setSelectOpen(false)
                             }}

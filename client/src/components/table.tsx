@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 import { View, Text, Input } from '@tarojs/components'
 import './table.less'
 import Table from 'taro3-table';
-import { Pagination, Dialog } from "@taroify/core"
+import { Pagination, Dialog, Toast } from "@taroify/core"
 
 const TableBox = function (props) {
   const dispatch: { education: any } = useDispatch()
@@ -12,7 +12,6 @@ const TableBox = function (props) {
 
   const {
     originDataSource,
-    totalCount,
   } = state
 
   const [searchValue, setSearchValue] = useState('')
@@ -73,6 +72,7 @@ const TableBox = function (props) {
             display: block;
           "
           onClick={() => {
+            if (record.count > 9) return Toast.open('该团人数已满，请重新选择参团团长！')
             Taro.pageScrollTo({
               selector: "#openGroupPos",
               duration: 100,
@@ -120,7 +120,7 @@ const TableBox = function (props) {
     },
     [currentPage],
   )
- 
+
   return (
     <View className='table-search-box'>
       <Dialog id="dialog" />
