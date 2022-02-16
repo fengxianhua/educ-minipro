@@ -88,8 +88,18 @@ const TableBox = function (props) {
       if (searchValue) {
         setCurrentPage(1)
         originDataSource?.map(item => {
+          // 查询团长姓名，如：张三
           if (item.userName.includes(searchValue)) {
             newList.push(item)
+          }
+          // 查询团员在团情况，如：张三+15888888888
+          const searchArr = searchValue.split('+')
+          if (searchValue.split('+').length > 1 && item.members?.length) {
+            item.members.map(member => {
+              if (member.userName === searchArr[0] && `${member.phone}` === searchArr[1]) {
+                newList.push(item)
+              }
+            })
           }
         })
         setCurDataSource(newList.splice(0, 10))
