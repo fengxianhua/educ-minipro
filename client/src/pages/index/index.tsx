@@ -20,43 +20,10 @@ const Index = () => {
 
   useEffect(() => {
     dispatch.education.getAllDataSource()
-    
-    // Taro.cloud
-    //   .callFunction({
-    //     name: "login",
-    //     data: {}
-    //   })
-    //   .then(res => {
-    //     console.log(res)
-    //   })
   }, [])
 
   return (
     <View className='index'>
-      {/* <Button onClick={() => {
-        Taro.login({
-          success: function (res) {
-            if (res.code) {
-              //发起网络请求
-              Taro.request({
-                url: `https://api.weixin.qq.com/sns/jscode2session?
-                grant_type=authorization_code
-                &appid= wx7808ad1c9efcdfff
-                &secret= db8be0bf5d49429845b892a9aa904503
-                &js_code=${res.code}`,
-                data: {
-                  code: res.code
-                }
-              }).then((res2) => {
-                console.log(res2)
-              })
-              console.log(res)
-            } else {
-              console.log('登录失败！' + res.errMsg)
-            }
-          }
-        })
-      }}>登录</Button> */}
       {/* 报名人数情况 */}
       <Text style="margin: 10px 0;display:block">
         <Text style="color: red;margin-right: 20px">当前报名人数：

@@ -46,7 +46,7 @@ const FormBox = function () {
   }, [state.addStatus])
 
   const onSubmit = useCallback(({detail: {value}}) => {
-    if (!value) return 
+    if (!value) return
     let isInGroup = false
     let groupFull = false
 
@@ -54,8 +54,11 @@ const FormBox = function () {
       if (item.userName === value.userName) {
         isInGroup  = true
       }
-      if (item.userName === value.grouperUserName[0].split('-')[0]
-        && (item.members?.length > 8 || item.count > 8)) {
+      if (
+        item.isGroupLeader
+        && value.userName === item.userName
+        && (item.members?.length > 8 || item.count > 8)
+        ) {
         groupFull = true
       }
       item?.members.map((member) => {
@@ -93,7 +96,7 @@ const FormBox = function () {
     <View className='form-box' id="openGroupPos">
       <Toast id="toast" />
       {
-        formShow 
+        formShow
           ?
           <View>
             <Divider style={{ fontSize: "16px", color: "#1989fa", borderColor: "#1989fa", padding: "0 16px" }}>
@@ -139,7 +142,7 @@ const FormBox = function () {
                 </Form.Item>
                 {
                   !isOpenGroup
-                    ? 
+                    ?
                     <View>
                       <Form.Item
                         ref={selectRef}
@@ -152,7 +155,7 @@ const FormBox = function () {
                         <Form.Control>
                           <Input readonly placeholder="点击选择参团团长" onClick={() => setSelectOpen(true)} />
                         </Form.Control>
-                      </Form.Item> 
+                      </Form.Item>
                       <Popup mountOnEnter={false} open={selectOpen} rounded placement="bottom" onClose={setSelectOpen}>
                           <Picker
                             onCancel={() => setSelectOpen(false)}
