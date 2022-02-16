@@ -19,24 +19,6 @@ const TableBox = function (props) {
   const [curDataSourceList, setCurDataSource]:any = useState([])
   const [currentPage, setCurrentPage] = useState(1)
 
-  // useEffect(() => {
-  //   if (!originDataSource?.length) return
-  //   const newList = []
-  //   const copyList = [...originDataSource]
-
-  //   if (searchValue) {
-  //     setCurrentPage(1)
-  //     originDataSource?.map(item => {
-  //       if (item.userName.includes(searchValue)) {
-  //         newList.push(item)
-  //       }
-  //     })
-  //     setCurDataSource(newList.splice(0, 10))
-  //   } else {
-  //     setCurDataSource(copyList.splice(0, 10))
-  //   }
-  // }, [searchValue])
-
   useEffect(() => {
     if (!originDataSource?.length) return
     const copyList = [...originDataSource]
@@ -47,7 +29,7 @@ const TableBox = function (props) {
     {
       title: '编号',
       dataIndex: 'index',
-      width: '20%',
+      width: '25%',
       render: (text, record, index) => {
         return (index + 1) + 10 * (currentPage - 1)
       }
@@ -55,12 +37,12 @@ const TableBox = function (props) {
     {
       title: '团长姓名',
       dataIndex: 'userName',
-      width: '20%',
+      width: '25%',
     },
     {
       title: '手机尾号',
       dataIndex: 'phone',
-      width: '20%',
+      width: '25%',
       render: (text) => {
         const isPhoneNo = text && (/^[1][3,4,5,7,8][0-9]{9}$/.test(text))
         return isPhoneNo ? (text + '').substring(7) : '号码有误'
@@ -69,33 +51,33 @@ const TableBox = function (props) {
     {
       title: '报名人数',
       dataIndex: 'count',
-      width: "20%",
+      width: "25%",
       render: text => text || 1
     },
-    {
-      title: '参团',
-      dataIndex: 'inGroup',
-      width: '20%',
-      render: () => {
-        return (<Text
-          style="
-            cursor: pointer;
-            color: white;
-            font-size: 12px;
-            min-width: 40px;
-            margin-left: 10px;
-            background: rgb(0, 178,35);
-            border-radius: 2px;
-            display: block;
+    // {
+    //   title: '参团',
+    //   dataIndex: 'inGroup',
+    //   width: '20%',
+    //   render: () => {
+    //     return (<Text
+    //       style="
+    //         cursor: pointer;
+    //         color: white;
+    //         font-size: 12px;
+    //         min-width: 40px;
+    //         margin-left: 10px;
+    //         background: rgb(0, 178,35);
+    //         border-radius: 2px;
+    //         display: block;
 
-          "
-          onClick={() => {
-          if (!props.curUserInfo) {
-            Dialog.alert("请先点击《我要参团》填写报名所需信息！")
-          }
-        }}>参团</Text>)
-      }
-    },
+    //       "
+    //       onClick={() => {
+    //       if (!props.curUserInfo) {
+    //         Dialog.alert("请先点击《我要参团》填写报名所需信息！")
+    //       }
+    //     }}>参团</Text>)
+    //   }
+    // },
 ]
   const handleSearch = useCallback(
     () => {

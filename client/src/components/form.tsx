@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useMemo} from 'react'
+import React, { useState, useCallback, useRef, useMemo, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
@@ -27,6 +27,16 @@ const FormBox = function () {
     [],
   )
 
+  useEffect(() => {
+    if (state.addStatus) {
+      dispatch.education.setBaseState({
+        addStatus: null,
+      })
+      setFormShow(false)
+      Toast.success(`${isOpenGroup ? '开团' : '参团'}成功！`)
+    }
+  }, [state.addStatus])
+
   const onSubmit = useCallback(({detail: {value}}) => {
     if (!value) return 
     let isInGroup = false
@@ -34,6 +44,11 @@ const FormBox = function () {
       if (item.userName === value.userName) {
         isInGroup  = true
       }
+      item?.members.map((member) => {
+        if (member.userName === value.userName) {
+          isInGroup  = true
+        }
+      })
     })
     if (isInGroup) {
       return Toast.open('该会员已存在！')

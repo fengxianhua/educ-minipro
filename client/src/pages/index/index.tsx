@@ -34,53 +34,53 @@ const Index = () => {
       {/* pic1 */}
       <Image
         style="width: 100%;"
-        src="/assets/p1.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/p1.jpg"
         // src={pic1}
       />
       {/* pic2 */}
       <Image
         style="width: 100%;"
-        src="/assets/pic2.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic2.jpg"
       />
       {/* pic3 */}
       <Image
         style="width: 100%; height: 60px"
-        src="/assets/pic3.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic3.jpg"
       />
       {/* pic4 */}
       <Image
         style="width: 100%; height: 300px"
-        src="/assets/pic4.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic4.jpg"
       />
       {/* pic5 */}
       <Image
         style="width: 100%; height: 360px"
-        src="/assets/pic5.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic5.jpg"
       />
       {/* pic6 */}
       <Image
         style="width: 100%; height: 360px"
-        src="/assets/pic6.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic6.jpg"
       />
       {/* pic7 */}
       <Image
         style="width: 100%; height: 26px"
-        src="/assets/pic7.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic7.jpg"
       />
       {/* pic9 */}
       <Image
         style="width: 100%; height: 430px"
-        src="/assets/pic9.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic9.jpg"
       />
       {/* pic10 */}
       <Image
         style="width: 100%; height: 430px"
-        src="/assets/pic10.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic10.jpg"
       />
       {/* pic11 */}
       <Image
         style="width: 100%; height: 430px"
-        src="/assets/pic11.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic11.jpg"
       />
       {/* 活动介绍 */}
       <BorderTitle value="活动介绍" />
@@ -94,7 +94,7 @@ const Index = () => {
         {/* 报名流程 */}
         <Image
         style="width: 100%; height: 170px"
-        src="/assets/pic12.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic12.jpg"
       />
       <View style="width: 100%; background:blue; height: 1px; margin: 20px 0"></View>
       {/* 开团按钮 */}
@@ -106,7 +106,7 @@ const Index = () => {
         {/* 备注、校区及联系方式 */}
       <Image
         style="width: 100%; height: 360px"
-        src="/assets/pic13.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic13.jpg"
       />
     </View>
   )

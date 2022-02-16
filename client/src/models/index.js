@@ -5,6 +5,40 @@ const db = Taro.cloud.database()
 const educationCollection = db.collection('education')
 const _ = db.command
 
+const getNewStudents = (data, count = 0) => {
+  data.map(item => {
+    if (item.isNew) {
+      count += 1
+    }
+    if (item.members?.length) {
+      getNewStudents(data, count)
+    }
+    return count
+  })
+}
+
+const fillZero = (value) => {
+  return value < 10 ? (`0${value}`) : value
+}
+const dateFormat = (timestamp, formatStr) => {
+  if (!timestamp) return undefined
+  const date = new Date(timestamp)
+  const year = date.getFullYear()
+  const month = fillZero(date.getMonth() + 1)
+  const day = fillZero(date.getDate())
+  const hour = fillZero(date.getHours())
+  const minute = fillZero(date.getMinutes())
+  const second = fillZero(date.getSeconds())
+
+  return formatStr
+    .replace('YYYY', year)
+    .replace('MM', month)
+    .replace('DD', day)
+    .replace('HH', hour)
+    .replace('mm', minute)
+    .replace('ss', second)
+}
+
 export const education = {
   state: {
     originDataSource: null,
@@ -18,13 +52,7 @@ export const education = {
     },
   },
   effects: (dispatch) => ({
-    async getAllDataSource(payload) {
-      // educationCollection.where({
-      //   userName: _.eq(userInfo[0]),
-      //   phone: new RegExp("^\\d+" + userInfo[1] + "$","gim")
-      // }).get().then((res) => {
-      //   console.log(res)
-      // })
+    async getAllDataSource() {
       // 先取出集合记录总数
       const countResult = await educationCollection.count()
       const total = countResult.total
@@ -40,40 +68,60 @@ export const education = {
       const allData = (await Promise.all(tasks)).reduce((acc, cur) => {
         return acc.data.concat(cur.data)
       }).data
-      const newTotalCount = allData?.filter(item => item.isNew)?.length
+      const totalCount = allData.map(item => item.count).reduce((acc, cur) => acc + cur)
+      const newTotalCount = allData.map(item => item.newCount).reduce((acc, cur) => acc + cur)
       this.setBaseState({
         originDataSource: allData,
-        totalCount: allData?.length || 0,
+        totalCount: totalCount || 0,
         newTotalCount: newTotalCount || 0,
       })
     },
-    // async openGroup(payload) {
-    //   // this.setBaseState({
-    //   //   addStatus: false
-    //   // })
-    //   // if (payload.isOpenGroup === true) {
-    //   //   educationCollection.add(
-    //   //     {
-    //   //       data: {
-    //   //         ...payload,
-    //   //         timestamp: new Date().getTime(),
-    //   //       },
-    //   //       success: function(res) {
-    //   //         this.setBaseState({
-    //   //           addStatus: true
-    //   //         })
-    //   //       }
-    //   //     }
-    //   //   )
-    //   // } else {
-    //   //   // const userInfo = payload.grouperUserName.split('+')
-    //   //   // educationCollection.where({
-    //   //   //   userName: _.eq(userInfo[0]),
-    //   //   //   phone: new RegExp("^\\d+" + userInfo[1] + "$","gim")
-    //   //   // }).get().then((res) => {
-    //   //   //   console.log(res)
-    //   //   // })
-    //   // }
-    // },
+    async openGroup(payload) {
+      this.setBaseState({
+        addStatus: null
+      })
+      if (payload.isOpenGroup === true) {
+        educationCollection.add(
+          {
+            data: {
+              ...payload,
+              count: 1,
+              newCount: payload.isNew ? 1 : 0,
+              members: [],
+              time: dateFormat(new Date().getTime(), 'YYYY-MM-DD HH:mm:ss'),
+            }
+          }
+        ).then((res) => {
+          console.log(res)
+          this.setBaseState({
+            addStatus: true
+          })
+          this.getAllDataSource()
+        }).catch(console.error)
+      } else {
+        const userInfo = payload.grouperUserName[0].split('-')
+        educationCollection.where({
+          userName: _.eq(userInfo[0]),
+          // phone: new RegExp("^\\d+" + userInfo[1] + "$","gim")
+        })
+          .update({
+            data: {
+              members: _.push({
+                ...payload,
+                time: dateFormat(new Date().getTime(), 'YYYY-MM-DD HH:mm:ss'),
+              }),
+              count: _.inc(1),
+              newCount: _.inc(payload.isNew ? 1 : 0),
+            }
+          })
+          .then((res) => {
+            console.log(res)
+            this.setBaseState({
+              addStatus: true
+            })
+            this.getAllDataSource()
+          }).catch(console.error)
+      }
+    },
   }),
 };
