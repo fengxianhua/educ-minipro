@@ -101,7 +101,7 @@ const FormBox = function () {
                 <Form.Item name="isNew" rules={[{ required: true, message: "请选择新生老生" }]}>
                   <Form.Label>老生新生</Form.Label>
                   <Form.Control>
-                    <Radio.Group direction="horizontal" defaultValue={true}>
+                    <Radio.Group direction="horizontal" defaultValue={'true'}>
                       <Radio name="true">新生</Radio>
                       <Radio name="false">老生</Radio>
                     </Radio.Group>
@@ -110,9 +110,9 @@ const FormBox = function () {
                 <Form.Item name="school" rules={[{ required: true, message: "请选择校区" }]}>
                   <Form.Label>报名小区</Form.Label>
                   <Form.Control>
-                    <Radio.Group direction="horizontal" defaultValue={1}>
-                      <Radio name="1">通泰校区</Radio>
-                      <Radio name="2">锦东校区</Radio>
+                    <Radio.Group direction="horizontal" defaultValue="通泰校区">
+                      <Radio name="通泰校区">通泰校区</Radio>
+                      <Radio name="锦东校区">锦东校区</Radio>
                     </Radio.Group>
                   </Form.Control>
                 </Form.Item>
