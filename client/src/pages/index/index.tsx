@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, useMemo } from 'react'
+import React,{ useState, useEffect, useCallback } from 'react'
 import Taro from '@tarojs/taro'
 import { useDispatch, useSelector } from 'react-redux'
 import p1 from '../../assets/p1.jpg'
@@ -11,17 +11,61 @@ import { View, Text, Image } from '@tarojs/components'
 import './index.less'
 import FormBox from '../../components/form'
 import TableBox from '../../components/table'
-import { Divider } from "@taroify/core"
+import { Divider, Dialog, Button } from "@taroify/core"
 import { timeLimit } from '../../config'
 
 const Index = () => {
   const dispatch: { education: any } = useDispatch()
   const state = useSelector((state: { education: any }) => state.education)
   const { totalCount, newTotalCount } = state
+  const [loading, setLoading] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   useEffect(() => {
     dispatch.education.getAllDataSource()
   }, [])
+
+  const handleDownloadAllData = useCallback(
+    () => {
+      setLoading(true)
+      Taro.cloud.callFunction({
+        name: "download",
+        data:{},
+        complete: res => {
+          Taro.cloud.downloadFile({
+            fileID: res?.result?.fileID, 
+            success: function (res) {
+              if (res.statusCode === 200) {
+                setLoading(false)
+                Taro.openDocument({
+                  filePath: res.tempFilePath,
+                  fileType:'xlsx',
+                  showMenu:true,
+                  success: function () {
+                    console.log('打开文档成功')
+                  }
+                })
+                // Taro.getFileSystemManager().saveFile({
+                //   tempFilePath: res.tempFilePath, 
+                //   filePath: Taro.env.USER_DATA_PATH + '/聆思教育参团报名表', 
+                //   success(res) {
+                //     Taro.showToast({
+                //       title: '文件已保存至：' + res.savedFilePath,
+                //       icon: 'none',
+                //       duration: 1500
+                //     })
+                //   }
+                // })
+              }
+            },
+            fail: console.error
+          })
+        },
+        fail: console.error
+      })
+    },
+    [],
+  )
 
   return (
     <View className='index'>
@@ -123,6 +167,22 @@ const Index = () => {
         style="width: 100%; height: 420px"
         src={pic13}
       />
+      <Divider onClick={() => setDialogOpen(true)} style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
+        {loading ? '下载中...' : '我是底线'}
+      </Divider>
+      <Dialog open={dialogOpen} onClose={setDialogOpen}>
+        <Dialog.Header>竟然被你发现了！</Dialog.Header>
+        <Dialog.Content>
+          需要生成并打开文件吗？
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onClick={() => setDialogOpen(false)}>取消</Button>
+          <Button onClick={() => {
+            setDialogOpen(false)
+            handleDownloadAllData()
+          }}>确认</Button>
+        </Dialog.Actions>
+      </Dialog>
     </View>
   )
 }
