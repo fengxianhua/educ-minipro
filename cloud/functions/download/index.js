@@ -1,15 +1,18 @@
 const cloud = require('wx-server-sdk')
-cloud.init(
-  // {
-  //   env: 'education-7g0kmbob4972f357'
-  // }
-)
+cloud.init()
 
 const xlsx = require('node-xlsx')    //导入Excel类库
 const db = cloud.database()   //声明数据库对象
 const _ = db.command
 
-exports.main = async () => {
+exports.main = async (data) => {
+  const res = cloud.getWXContext()
+  if (!data.whiteList.includes(res.OPENID)) {
+    return {
+      errCode: 10086,
+      errMsg: '抱歉，您没有下载权限！'
+    }
+  }
   try {
     let StuInfo = await db.collection('education').get()
     //将获取到的数据对象赋值给变量，接下来需要用该对象向Excel表中添加数据

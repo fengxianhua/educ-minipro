@@ -11,8 +11,8 @@ import { View, Text, Image } from '@tarojs/components'
 import './index.less'
 import FormBox from '../../components/form'
 import TableBox from '../../components/table'
-import { Divider, Dialog, Button } from "@taroify/core"
-import { timeLimit } from '../../config'
+import { Divider, Dialog, Button, Toast } from "@taroify/core"
+import { timeLimit, whiteList } from '../../config'
 
 const Index = () => {
   const dispatch: { education: any } = useDispatch()
@@ -30,8 +30,13 @@ const Index = () => {
       setLoading(true)
       Taro.cloud.callFunction({
         name: "download",
-        data:{},
+        data: {
+          whiteList
+        },
         complete: res => {
+          if (res?.result.errCode === 10086) {
+            return Toast.open(res?.result.errMsg)
+          }
           Taro.cloud.downloadFile({
             fileID: res?.result?.fileID, 
             success: function (res) {
