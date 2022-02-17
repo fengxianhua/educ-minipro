@@ -5,6 +5,7 @@ import { View, Text, Input } from '@tarojs/components'
 import './table.less'
 import Table from 'taro3-table';
 import { Pagination, Dialog, Toast } from "@taroify/core"
+import { timeLimit } from '../config'
 
 const TableBox = function (props) {
   const dispatch: { education: any } = useDispatch()
@@ -72,6 +73,9 @@ const TableBox = function (props) {
             display: block;
           "
           onClick={() => {
+            if (new Date() < new Date(timeLimit.startTime) || new Date() > new Date(timeLimit.endTime)) {
+              return Toast.open('当前不在报名时段，请关注招生日期！')
+            }
             if (record.count > 9) return Toast.open('该团人数已满，请重新选择参团团长！')
             Taro.pageScrollTo({
               selector: "#openGroupPos",

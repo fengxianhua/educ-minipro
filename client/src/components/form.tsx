@@ -4,6 +4,7 @@ import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { Toast, Form, Input, Cell, Divider, Radio, Button, Picker, Popup, Dialog } from "@taroify/core"
 import './form.less'
+import { timeLimit } from '../config'
 
 const FormBox = function () {
   const [formShow, setFormShow] = useState(false)
@@ -16,6 +17,9 @@ const FormBox = function () {
   const [selectOpen, setSelectOpen] = useState(false)
   const handleOpenGroup = useCallback(
     () => {
+      if (new Date() < new Date(timeLimit.startTime) || new Date() > new Date(timeLimit.endTime)) {
+        return Toast.open('当前不在报名时段，请关注招生日期！')
+      }
       setIsOpenGroup(true)
       setFormShow(true)
     },
@@ -23,6 +27,9 @@ const FormBox = function () {
   )
   const handleJoinGroup = useCallback(
     () => {
+      if (new Date() < new Date(timeLimit.startTime) || new Date() > new Date(timeLimit.endTime)) {
+        return Toast.open('当前不在报名时段，请关注招生日期！')
+      }
       if (!state.originDataSource?.length) return Toast.open("当前还未有成团，请先开团！")
       setIsOpenGroup(false)
       setFormShow(true)

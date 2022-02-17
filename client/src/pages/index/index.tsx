@@ -12,6 +12,7 @@ import './index.less'
 import FormBox from '../../components/form'
 import TableBox from '../../components/table'
 import { Divider } from "@taroify/core"
+import { timeLimit } from '../../config'
 
 const Index = () => {
   const dispatch: { education: any } = useDispatch()
@@ -94,7 +95,7 @@ const Index = () => {
         <Text style="color: red;display:block;">主办方电话：<Text  style="color: blue;">13116755661</Text></Text>
         <Text style="color: red;display:block;">最大召集数：<Text  style="color: blue;">300</Text></Text>
         <Text style="color: red;display:block;">每团人数：<Text  style="color: blue;">10</Text></Text>
-        <Text style="color: red;display:block;">活动时间：<Text  style="color: blue;">2022-02-22 ～ 2022-03-15</Text></Text>
+        <Text style="color: red;display:block;">活动时间：<Text style="color: blue;">{timeLimit.startTime} ～ {timeLimit.endTime}</Text></Text>
       </Text>
         {/* 报名流程 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
