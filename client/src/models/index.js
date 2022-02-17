@@ -72,7 +72,7 @@ export const education = {
       const totalCount = allData.map(item => item.count).reduce((acc, cur) => acc + cur)
       const newTotalCount = allData.map(item => item.newCount).reduce((acc, cur) => acc + cur)
       this.setBaseState({
-        originDataSource: allData,
+        originDataSource: allData.filter(item => item.isGroupLeader),
         totalCount: totalCount || 0,
         newTotalCount: newTotalCount || 0,
       })
@@ -89,6 +89,7 @@ export const education = {
               count: 1,
               newCount: payload.isNew ? 1 : 0,
               members: [],
+              isGroupLeader: true,
               time: dateFormat(new Date().getTime(), 'YYYY-MM-DD HH:mm:ss'),
             }
           }
@@ -101,7 +102,30 @@ export const education = {
         }).catch(console.error)
       } else {
         const userInfo = payload.grouperUserName[0].split('-')
+        // 新增一条记录
+        educationCollection.add(
+          {
+            data: {
+              ...payload,
+              grouperUserName: payload.grouperUserName[0],
+              isGroupLeader: false,
+              members: [],
+              count: 0,
+              newCount: 0,
+              time: dateFormat(new Date().getTime(), 'YYYY-MM-DD HH:mm:ss'),
+            }
+          }
+        ).then((res) => {
+          console.log(res)
+          this.setBaseState({
+            addStatus: true
+          })
+          this.getAllDataSource()
+        }).catch(console.error)
+
+        // 修改原来的记录
         educationCollection.where({
+          isGroupLeader: true,
           userName: _.eq(userInfo[0]),
           // phone: new RegExp("^\\d+" + userInfo[1] + "$","gim")
         })
