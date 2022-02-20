@@ -1,6 +1,6 @@
 const timeLimit = {
-  startTime: '2022-2-17',
-  endTime: '2022-3-19',
+  startTime: '2022-3-1',
+  endTime: '2022-3-31',
 }
 const whiteList = [
   'oTGpP5ejFInQBAIk-WMOSBW7IBf8',

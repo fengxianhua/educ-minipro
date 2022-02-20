@@ -86,35 +86,50 @@ const Index = () => {
           <Text style="color: blue;">{newTotalCount}</Text>
         </Text>
       </Text>
-      {/* pic1 */}
+      {/* 活动介绍 */}
       <Image
-        style="width: 100%;"
-        src={p1}
+        style="width: 100%; height: 520px"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic1.jpg"
       />
-      {/* pic2 */}
       <Image
-        style="width: 100%;"
-        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic2.jpg"
-      />
-      {/* pic3 */}
-      <Image
-        style="width: 100%; height: 60px"
+        style="width: 100%; height: 520px"
         src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic3.jpg"
       />
-      {/* pic4 */}
       <Image
-        style="width: 100%; height: 420px"
-        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic4.jpg"
+        style="width: 100%; height: 900px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic2.jpg"
       />
-      {/* pic5 */}
+      {/* 团长礼物 */}
+      <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
+        团长礼物
+      </Divider>
+      <Text style="color: blue; display: block; text-align: center;margin: 10px 0;">
+        5人组团成功并全团缴费
+      </Text>
+      <Text style="color: red; display: block; text-align: center;margin: 10px 0;">
+        冰墩墩3D小夜灯
+      </Text>
       <Image
-        style="width: 100%; height: 420px"
-        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic5.jpg"
+        style="width: 100%; height: 400px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/liwu-pic4.jpeg"
       />
-      {/* pic6 */}
       <Image
-        style="width: 100%; height: 420px"
-        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic6.jpg"
+        style="width: 100%; height: 500px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/liwu-pic3.jpeg"
+      />
+      <Text style="color: blue; display: block; text-align: center;margin: 10px 0;">
+        10人组团成功并全团缴费
+      </Text>
+      <Text style="color: red; display: block; text-align: center;margin: 10px 0;">
+        冰墩墩恒温杯
+      </Text>
+      <Image
+        style="width: 100%; height: 400px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/liwu-pic1.jpeg"
+      />
+      <Image
+        style="width: 100%; height: 400px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/liwu-pic2.jpeg"
       />
       {/* 学员作品展示 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
@@ -122,30 +137,29 @@ const Index = () => {
       </Divider>
       {/* pic9 */}
       <Image
-        style="width: 100%; height: 500px"
+        style="width: 100%; height: 600px"
         src={pic9}
       />
       {/* pic10 */}
       <Image
-        style="width: 100%; height: 500px"
+        style="width: 100%; height: 600px"
         src={pic10}
       />
       {/* pic11 */}
       <Image
-        style="width: 100%; height: 500px"
+        style="width: 100%; height: 600px"
         src={pic11}
       />
       {/* 活动介绍 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
         活动介绍
       </Divider>
-      <Text style="margin: 10px 0;display:block; padding-left: 8px;font-size: 14px ">
-        <Text style="color: red;display:block;">活动主办方：<Text  style="color: blue;">韩老师</Text></Text>
-        <Text style="color: red;display:block;">主办方电话：<Text  style="color: blue;">13116755661</Text></Text>
+      <View style="margin: 10px 0;display:block; padding-left: 8px;font-size: 14px ">
+        <Text style="color: red;display:block;">活动主办方：<Text  style="color: blue;">林老师18006689799/Lena老师18815006876</Text></Text>
         <Text style="color: red;display:block;">最大召集数：<Text  style="color: blue;">300</Text></Text>
         <Text style="color: red;display:block;">每团人数：<Text  style="color: blue;">10</Text></Text>
         <Text style="color: red;display:block;">活动时间：<Text style="color: blue;">{timeLimit.startTime} ～ {timeLimit.endTime}</Text></Text>
-      </Text>
+      </View>
         {/* 报名流程 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
         报名流程
