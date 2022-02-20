@@ -1,7 +1,6 @@
-import React,{ useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Taro from '@tarojs/taro'
 import { useDispatch, useSelector } from 'react-redux'
-import p1 from '../../assets/p1.jpg'
 import pic9 from '../../assets/pic9.jpg'
 import pic10 from '../../assets/pic10.jpg'
 import pic11 from '../../assets/pic11.jpg'
