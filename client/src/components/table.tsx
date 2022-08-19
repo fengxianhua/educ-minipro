@@ -7,9 +7,10 @@ import Table from 'taro3-table';
 import { Pagination, Dialog, Toast } from "@taroify/core"
 import { timeLimit } from '../config'
 
-const TableBox = function (props) {
+const TableBox = function () {
   const dispatch: { education: any } = useDispatch()
   const state = useSelector((state: { education: any }) => state.education)
+  // const params = Taro.getCurrentInstance().router?.params
 
   const {
     originDataSource,
@@ -38,6 +39,14 @@ const TableBox = function (props) {
       title: '团长姓名',
       dataIndex: 'userName',
       width: '20%',
+      render: (text, record) => {
+        return <Text style={{ color: 'blue'}} onClick={() => {
+          Taro.navigateTo({
+            url: `/pages/leaderInfo/index?isLeader=${true}`
+          })
+          Taro.setStorageSync("currentMember", record?.members)
+        }}>{text}</Text>
+      }
     },
     {
       title: '手机尾号',
