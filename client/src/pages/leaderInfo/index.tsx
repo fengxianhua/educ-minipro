@@ -45,10 +45,6 @@ const Index = () => {
 
   return (
     <View className='index'>
-
-      <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
-        团员列表
-      </Divider>
       <Table
         className='table-box'
         columns={columns}

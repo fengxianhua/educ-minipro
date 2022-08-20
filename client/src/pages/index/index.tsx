@@ -37,7 +37,7 @@ const Index = () => {
             return Toast.open(res?.result.errMsg)
           }
           Taro.cloud.downloadFile({
-            fileID: res?.result?.fileID, 
+            fileID: res?.result?.fileID,
             success: function (res) {
               if (res.statusCode === 200) {
                 setLoading(false)
@@ -50,8 +50,8 @@ const Index = () => {
                   }
                 })
                 // Taro.getFileSystemManager().saveFile({
-                //   tempFilePath: res.tempFilePath, 
-                //   filePath: Taro.env.USER_DATA_PATH + '/聆思教育参团报名表', 
+                //   tempFilePath: res.tempFilePath,
+                //   filePath: Taro.env.USER_DATA_PATH + '/聆思教育参团报名表',
                 //   success(res) {
                 //     Taro.showToast({
                 //       title: '文件已保存至：' + res.savedFilePath,
@@ -87,16 +87,40 @@ const Index = () => {
       </Text>
       {/* 活动介绍 */}
       <Image
-        style="width: 100%; height: 520px"
-        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic1.jpg"
+        style="width: 100%; height: 500px"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/info1.jpg"
       />
       <Image
-        style="width: 100%; height: 520px"
-        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic3.jpg"
+        style="width: 100%; height: 500px"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/info2.jpg"
       />
       <Image
         style="width: 100%; height: 900px;"
-        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/pic2.jpg"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other1.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other2.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other3.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other4.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other5.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other6.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other7.jpg"
       />
       {/* 团长礼物 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
@@ -148,6 +172,22 @@ const Index = () => {
       <Image
         style="width: 100%; height: 600px"
         src={pic11}
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/room1.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/room2.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/room3.jpg"
+      />
+      <Image
+        style="width: 100%; height: 300px;"
+        src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/room4.jpg"
       />
       {/* 活动介绍 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
