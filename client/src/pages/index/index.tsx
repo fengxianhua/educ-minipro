@@ -19,9 +19,21 @@ const Index = () => {
   const { totalCount, newTotalCount } = state
   const [loading, setLoading] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
-
+  const { shareGrouper } = Taro.getCurrentInstance()?.router?.params || {}
+  
   useEffect(() => {
     dispatch.education.getAllDataSource()
+    if (shareGrouper) {
+      dispatch.education.setBaseState({
+        pickedGrouper: shareGrouper
+      })
+      setTimeout(() => {
+        Taro.pageScrollTo({
+          selector: "#openGroupPos",
+          duration: 100,
+        })
+      }, 500);
+    }
   }, [])
 
   const handleDownloadAllData = useCallback(
@@ -70,6 +82,13 @@ const Index = () => {
     },
     [],
   )
+
+  Taro.useShareAppMessage(() => {
+    return {
+      title: '聆思教育开团啦！',
+      path: `pages/index/index?shareGrouper=${state.shareGrouper}`
+    }
+  })
 
   return (
     <View className='index'>
@@ -123,7 +142,7 @@ const Index = () => {
         src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics2/other7.jpg"
       />
       {/* 团长礼物 */}
-      <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
+      {/* <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
         团长礼物
       </Divider>
       <Text style="color: blue; display: block; text-align: center;margin: 10px 0;">
@@ -153,7 +172,7 @@ const Index = () => {
       <Image
         style="width: 100%; height: 400px;"
         src="cloud://education-7g0kmbob4972f357.6564-education-7g0kmbob4972f357-1309572070/pics/liwu-pic2.jpeg"
-      />
+      /> */}
       {/* 学员作品展示 */}
       <Divider style={{ fontSize: "16px", color: "blue", borderColor: "blue", padding: "0 16px" }}>
         学员作品展示

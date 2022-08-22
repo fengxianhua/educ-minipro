@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Taro from '@tarojs/taro'
-import { View, Text, Input } from '@tarojs/components'
+import { View, Text, Input, Button } from '@tarojs/components'
 import './table.less'
 import Table from 'taro3-table';
 import { Pagination, Dialog, Toast } from "@taroify/core"
@@ -30,7 +30,7 @@ const TableBox = function () {
     {
       title: '编号',
       dataIndex: 'index',
-      width: '20%',
+      width: '10%',
       render: (text, record, index) => {
         return (index + 1) + 10 * (currentPage - 1)
       }
@@ -60,42 +60,63 @@ const TableBox = function () {
     {
       title: '报名人数',
       dataIndex: 'count',
-      width: "20%",
+      width: "15%",
       render: text => text || 1
     },
     {
-      title: '参团',
+      title: '操作',
       dataIndex: 'inGroup',
-      width: '20%',
+      width: '35%',
       render: (text, record) => {
-        return (<Text
-          style="
-            cursor: pointer;
-            color: white;
-            font-size: 12px;
-            min-width: 50px;
-            height: 20px;
-            line-height: 20px;
-            margin-left: 10px;
-            background: rgb(0, 178,35);
-            border-radius: 2px;
-            display: block;
-          "
-          onClick={() => {
-            if (new Date() < new Date(timeLimit.startTime) || new Date() > new Date(timeLimit.endTime)) {
-              return Toast.open('当前不在报名时段，请关注招生日期！')
-            }
-            if (record.count > 9) return Toast.open('该团人数已满，请重新选择参团团长！')
-            Taro.pageScrollTo({
-              selector: "#openGroupPos",
-              duration: 100,
-            })
-            dispatch.education.setBaseState({
-              pickedGrouper: `${record.userName}-${`${record.phone}`.substring(7)}`
-            })
-        }}>参团</Text>)
+        return (<>
+          <Button
+            style="
+              cursor: pointer;
+              color: white;
+              font-size: 12px;
+              min-width: 50px;
+              height: 20px;
+              line-height: 20px;
+              background: rgb(0, 178,35);
+              border-radius: 2px;
+            "
+            type="primary"
+            openType='share'
+            onClick={() => {
+              dispatch.education.setBaseState({
+                shareGrouper: `${record.userName}-${`${record.phone}`.substring(7)}`
+              })
+            }}
+          >转发</Button>
+          <Text
+            style="
+              cursor: pointer;
+              color: white;
+              font-size: 12px;
+              min-width: 50px;
+              height: 20px;
+              line-height: 20px;
+              background: rgb(0, 178,35);
+              border-radius: 2px;
+              display: block;
+            "
+            onClick={() => {
+              if (new Date() < new Date(timeLimit.startTime) || new Date() > new Date(timeLimit.endTime)) {
+                return Toast.open('当前不在报名时段，请关注招生日期！')
+              }
+              if (record.count > 9) return Toast.open('该团人数已满，请重新选择参团团长！')
+              Taro.pageScrollTo({
+                selector: "#openGroupPos",
+                duration: 100,
+              })
+              dispatch.education.setBaseState({
+                pickedGrouper: `${record.userName}-${`${record.phone}`.substring(7)}`
+              })
+              }}>参团</Text>
+        </>)
       }
     },
+
 ]
   const handleSearch = useCallback(
     () => {

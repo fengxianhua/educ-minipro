@@ -3,7 +3,6 @@ import Taro from '@tarojs/taro'
 import { View} from '@tarojs/components'
 import './index.less'
 import Table from 'taro3-table';
-import { Divider } from "@taroify/core"
 
 const Index = () => {
   // const params = Taro.getCurrentInstance().router?.params
