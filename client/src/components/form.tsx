@@ -165,11 +165,21 @@ const FormBox = function () {
                   </Form.Control>
                 </Form.Item>
                 <Form.Item name="school" rules={[{ required: true, message: "请选择校区" }]}>
-                  <Form.Label>报名小区</Form.Label>
+                  <Form.Label>报名校区</Form.Label>
                   <Form.Control>
                     <Radio.Group direction="horizontal" defaultValue="通泰校区">
                       <Radio name="通泰校区">通泰校区</Radio>
                       <Radio name="锦东校区">锦东校区</Radio>
+                    </Radio.Group>
+                  </Form.Control>
+                </Form.Item>
+                <Form.Item name="className" rules={[{ required: true, message: "请选择课程类型" }]}>
+                  <Form.Label>报名课程</Form.Label>
+                  <Form.Control>
+                    <Radio.Group direction="vertical" defaultValue="美术课">
+                      <Radio name="美术课">美术课</Radio>
+                      <Radio name="书法课">书法课</Radio>
+                      <Radio name="英语素养课">英语素养课</Radio>
                     </Radio.Group>
                   </Form.Control>
                 </Form.Item>

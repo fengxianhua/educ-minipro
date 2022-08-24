@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 
 Taro.cloud.init()
 const db = Taro.cloud.database()
-const educationCollection = db.collection('education')
+const educationCollection = db.collection('educationV2')
 const _ = db.command
 
 const getNewStudents = (data, count = 0) => {

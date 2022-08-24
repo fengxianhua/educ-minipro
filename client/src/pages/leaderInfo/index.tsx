@@ -1,11 +1,10 @@
 import React from 'react'
 import Taro from '@tarojs/taro'
-import { View} from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import './index.less'
 import Table from 'taro3-table';
 
 const Index = () => {
-  // const params = Taro.getCurrentInstance().router?.params
   const currentMembers = Taro.getStorageSync('currentMember')
   const columns = [
     {
@@ -36,9 +35,17 @@ const Index = () => {
       width: "10%"
     },
     {
+      title: '报名课程',
+      dataIndex: 'className',
+      width: "20%"
+    },
+    {
       title: '登记时间',
       dataIndex: 'time',
-      width: "50%"
+      width: "30%",
+      render: (t) => {
+        return <Text style={{ whiteSpace: 'normal' }}>{t}</Text>
+      }
     }
   ]
 

@@ -44,7 +44,7 @@ const TableBox = function () {
           Taro.navigateTo({
             url: `/pages/leaderInfo/index?isLeader=${true}`
           })
-          Taro.setStorageSync("currentMember", record?.members)
+          Taro.setStorageSync("currentMember", [record].concat(record.members))
         }}>{text}</Text>
       }
     },
